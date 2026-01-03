@@ -10,12 +10,12 @@
       --max: 1040px;
       --bg: #ffffff;
       --card: #ffffff;
-      --tx: #0f172a;         /* slate-900 */
-      --mut: #475569;        /* slate-600 */
-      --bd: #e2e8f0;         /* slate-200 */
-      --soft: #f8fafc;       /* slate-50 */
-      --soft2:#f1f5f9;       /* slate-100 */
-      --accent:#0f172a;      /* elegant dark */
+      --tx: #0f172a;
+      --mut: #475569;
+      --bd: #e2e8f0;
+      --soft: #f8fafc;
+      --soft2:#f1f5f9;
+      --accent:#0f172a;
       --good: #16a34a;
       --warn: #f59e0b;
       --bad:  #dc2626;
@@ -32,7 +32,6 @@
         radial-gradient(800px 500px at 85% 0%, rgba(15,23,42,.05), transparent 55%),
         var(--bg);
     }
-    a{color:inherit}
     header{
       position:sticky; top:0; z-index:10;
       backdrop-filter:saturate(120%) blur(8px);
@@ -62,7 +61,7 @@
       color:var(--mut);
       white-space:nowrap;
     }
-    .langsel{display:flex; gap:10px; align-items:center;}
+    .langsel{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
     select{
       border:1px solid var(--bd);
       border-radius:12px;
@@ -82,9 +81,7 @@
       box-shadow: var(--shadow);
       padding:18px;
     }
-    .hero{
-      padding:18px 18px 10px;
-    }
+    .hero{padding:18px 18px 10px;}
     .hero-title{font-size:22px; margin:0 0 6px; letter-spacing:-.2px;}
     .hero-desc{margin:0; color:var(--mut); line-height:1.55;}
     .kpis{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
@@ -96,7 +93,7 @@
       font-size:12px;
       color:var(--mut);
     }
-    .kpi strong{color:var(--tx); font-weight:700;}
+    .kpi strong{color:var(--tx); font-weight:800;}
     .steps{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 14px;}
     .step{
       border:1px solid var(--bd);
@@ -107,8 +104,8 @@
       color:var(--mut);
     }
     .step.active{background: var(--accent); color:#fff; border-color: var(--accent);}
-    label{display:block; font-size:13px; margin:12px 0 7px; color:var(--tx);}
-    .hint{font-size:12px; color:var(--mut); margin-top:6px;}
+    label{display:block; font-size:13px; margin:12px 0 7px; color:var(--tx); font-weight:700;}
+    .hint{font-size:12px; color:var(--mut); margin-top:6px; line-height:1.45;}
     input[type="text"], input[type="email"], textarea, .select{
       width:100%;
       border:1px solid var(--bd);
@@ -128,10 +125,10 @@
       margin-top:10px;
     }
     .chk input{margin-top:3px; transform: scale(1.05);}
-    .chk .t{font-weight:700; font-size:13px;}
+    .chk .t{font-weight:900; font-size:13px;}
     .chk .s{font-size:12px; color:var(--mut); margin-top:3px; line-height:1.4;}
-    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
-    button{
+    .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; align-items:center;}
+    button, .linkbtn{
       border:1px solid var(--bd);
       background:#fff;
       border-radius: 14px;
@@ -139,8 +136,12 @@
       font-size:14px;
       cursor:pointer;
       color:var(--tx);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
-    button.primary{
+    button.primary, .linkbtn.primary{
       background: var(--accent);
       border-color: var(--accent);
       color:#fff;
@@ -179,7 +180,7 @@
     ul{margin:10px 0 0 18px;}
     li{margin:6px 0; line-height:1.45;}
     .small{font-size:12px; color:var(--mut);}
-    .aside-title{font-weight:800; font-size:13px;}
+    .aside-title{font-weight:900; font-size:13px;}
     .aside-p{color:var(--mut); margin:8px 0; line-height:1.55;}
     .callout{
       border:1px solid var(--bd);
@@ -232,7 +233,6 @@
 <main>
   <div class="grid">
 
-    <!-- LEFT: Wizard -->
     <section class="card">
       <div class="hero">
         <div class="hero-title" id="heroTitle">Check Wing Bend fit — then request a quotation</div>
@@ -297,6 +297,20 @@
 
       <!-- STEP 2 -->
       <div id="step2" style="display:none;">
+        <!-- NEW: Industry selector -->
+        <label id="industryLabel">Industry / Application</label>
+        <select id="industry" class="select">
+          <option value="">Select…</option>
+          <option value="automotive">Automotive</option>
+          <option value="enclosure">Electrical / Enclosure</option>
+          <option value="appliance">Appliance / Consumer</option>
+          <option value="medical">Medical / Lab</option>
+          <option value="aerospace">Aerospace</option>
+          <option value="jobshop">Job shop / Sheet metal</option>
+          <option value="other">Other</option>
+        </select>
+        <div class="hint" id="industryHint">This helps us tailor recommendations and examples.</div>
+
         <label id="matLabel">Material</label>
         <select id="material" class="select">
           <option value="">Select…</option>
@@ -349,10 +363,17 @@
 
           <div class="hr"></div>
 
+          <!-- NEW: Attach drawing link CTA in Step 3 -->
           <div class="callout">
-            <div style="font-weight:800;font-size:13px;" id="ctaMiniTitle">Next best step</div>
+            <div style="font-weight:900;font-size:13px;" id="ctaMiniTitle">Next best step</div>
             <div class="small" id="ctaMiniText">
-              Submit an RFQ. Our team will confirm your drawing and propose the recommended Wing Bend setup.
+              Submit an RFQ and attach your drawing so we can confirm the recommended Wing Bend setup quickly.
+            </div>
+            <div class="btns" style="margin-top:10px;">
+              <a class="linkbtn primary" id="attachBtn" href="#" target="_blank" rel="noopener">
+                <span id="attachBtnText">Attach drawing (PDF/DXF)</span>
+              </a>
+              <span class="small" id="attachHint">Opens a secure upload page in a new tab.</span>
             </div>
           </div>
 
@@ -390,6 +411,20 @@
 
         <div class="hr"></div>
 
+        <!-- NEW: Attach drawing link CTA in Step 4 -->
+        <div class="callout">
+          <div style="font-weight:900;font-size:13px;" id="attach2Title">Attach drawing to speed up selection</div>
+          <div class="small" id="attach2Text">If you have a PDF/DXF, please upload it here. You can upload before or after sending the RFQ.</div>
+          <div class="btns" style="margin-top:10px;">
+            <a class="linkbtn primary" id="attachBtn2" href="#" target="_blank" rel="noopener">
+              <span id="attachBtn2Text">Attach drawing (PDF/DXF)</span>
+            </a>
+            <span class="small" id="attach2Hint">Opens in a new tab.</span>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
         <div class="small" id="leadPreviewLabel">Submission preview</div>
         <div class="result" id="leadPreview" style="margin-top:8px;"></div>
 
@@ -407,7 +442,6 @@
 
     </section>
 
-    <!-- RIGHT: Sales content -->
     <aside class="card">
       <div class="aside-title" id="asideTitle">Why customers use this check</div>
       <p class="aside-p" id="asideText">
@@ -434,7 +468,7 @@
 
       <div class="hr"></div>
 
-      <div class="aside-title" id="asideIdeaTitle">Optional “selling” upgrade (later)</div>
+      <div class="aside-title" id="asideIdeaTitle">Selling upgrade (optional)</div>
       <p class="aside-p" id="asideIdeaText">
         Add an ROI mini-calculator (setup time + scrap) to justify the purchase to management.
       </p>
@@ -451,17 +485,36 @@
 
 <script>
   // =======================
-  // 1) FORM SETTINGS (Formspree)
+  // 1) SETTINGS
   // =======================
-  // Create a Formspree form, then replace the endpoint below:
-  // Example: https://formspree.io/f/abcdwxyz
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_ME";
-
-  // Optional: where you want the email subject to appear (Formspree usually puts in email body)
+  // Formspree: replace with your endpoint (example: https://formspree.io/f/abcdwxyz)
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvzgrnkl";
   const EMAIL_SUBJECT = "Wing Bend RFQ / Fit Check Lead";
 
+  // NEW: Drawing upload URL (replace with your URL)
+  // Example could be: Google Drive upload folder link, SharePoint, Dropbox file request, etc.
+  const DRAWING_UPLOAD_URL = "https://www.dropbox.com/scl/fo/r9hj39nhkcaah0kus8tga/AOEzq3Hk8CnDuqgg0gFqc5Q?rlkey=uuy5g065e6bdvi89idzmxncwd&st=m9msowe7&dl=0";
+
+  function setDrawingLinks(){
+    const url = DRAWING_UPLOAD_URL && DRAWING_UPLOAD_URL !== "REPLACE_WITH_YOUR_UPLOAD_URL"
+      ? DRAWING_UPLOAD_URL
+      : "#";
+    document.getElementById("attachBtn").href = url;
+    document.getElementById("attachBtn2").href = url;
+    // If URL not set, disable visually
+    const disabled = (url === "#");
+    ["attachBtn","attachBtn2"].forEach(id=>{
+      const a = document.getElementById(id);
+      if(disabled){
+        a.style.opacity = ".55";
+        a.style.pointerEvents = "none";
+        a.title = "Please set DRAWING_UPLOAD_URL in the code.";
+      }
+    });
+  }
+
   // =======================
-  // 2) i18n (EN/JA) – stronger sales copy
+  // 2) i18n
   // =======================
   const T = {
     en: {
@@ -484,6 +537,8 @@
       p_hole_s:"Need improved stability near features",
       next:"Next", back:"Back",
       step1Hint:"Tip: If you are not sure, select what you care about most and continue.",
+      industryLabel:"Industry / Application",
+      industryHint:"This helps us tailor recommendations and examples.",
       matLabel:"Material",
       thkLabel:"Thickness (approx.)",
       lenLabel:"Bend length (approx.)",
@@ -491,7 +546,9 @@
       step2Hint:"You can continue even if some fields are unknown.",
       resSub:"Based on your answers, here is a quick recommendation.",
       ctaMiniTitle:"Next best step",
-      ctaMiniText:"Submit an RFQ. Our team will confirm your drawing and propose the recommended Wing Bend setup.",
+      ctaMiniText:"Submit an RFQ and attach your drawing so we can confirm the recommended Wing Bend setup quickly.",
+      attachBtnText:"Attach drawing (PDF/DXF)",
+      attachHint:"Opens a secure upload page in a new tab.",
       resFoot:"Note: This is a quick fit check. Final selection requires confirmation of drawing and bending conditions.",
       request:"Request Quotation",
       rfqDesc:"Please submit your details. We will reply with a recommended tooling configuration and a quotation.",
@@ -503,6 +560,10 @@
       leadPreviewLabel:"Submission preview",
       send:"Send Request",
       rfqFoot:"You may attach drawings after submission (we will reply with next steps).",
+      attach2Title:"Attach drawing to speed up selection",
+      attach2Text:"If you have a PDF/DXF, please upload it here. You can upload before or after sending the RFQ.",
+      attachBtn2Text:"Attach drawing (PDF/DXF)",
+      attach2Hint:"Opens in a new tab.",
       asideTitle:"Why customers use this check",
       asideText:"It turns your application concerns into a clear recommendation and a ready-to-quote request — in about 2 minutes.",
       asideBenefitsTitle:"Typical Wing Bend benefits",
@@ -515,10 +576,9 @@
         "Quotation with lead time estimate",
         "Confirmation questions minimized (we already have your summary)"
       ],
-      asideIdeaTitle:"Optional “selling” upgrade (later)",
+      asideIdeaTitle:"Selling upgrade (optional)",
       asideIdeaText:"Add an ROI mini-calculator (setup time + scrap) to justify the purchase to management.",
       privacyNote:"Privacy: we only use your submission to respond to your request.",
-      // Result headlines:
       goodTitle:"✅ Wing Bend is likely a good fit",
       goodSub:"We can confirm with your drawing and propose a recommended setup + quotation.",
       warnTitle:"⚠️ Possibly a fit (confirmation needed)",
@@ -546,6 +606,8 @@
       p_hole_s:"形状近傍での安定性を上げたい",
       next:"次へ", back:"戻る",
       step1Hint:"不明な場合は、最も重視する項目を選んで進めてください。",
+      industryLabel:"業界／用途",
+      industryHint:"推奨と例示を用途に合わせて調整します。",
       matLabel:"材質",
       thkLabel:"板厚（目安）",
       lenLabel:"曲げ長さ（目安）",
@@ -553,7 +615,9 @@
       step2Hint:"不明な項目があっても進められます。",
       resSub:"ご回答内容から、簡易的な推奨を表示します。",
       ctaMiniTitle:"次のステップ",
-      ctaMiniText:"見積依頼を送信してください。図面確認の上で推奨構成とお見積をご提案します。",
+      ctaMiniText:"見積依頼を送信し、図面（PDF/DXF）を添付いただくと選定が早くなります。",
+      attachBtnText:"図面を添付（PDF/DXF）",
+      attachHint:"新しいタブでアップロードページが開きます。",
       resFoot:"注：これは簡易チェックです。最終選定には図面・曲げ条件の確認が必要です。",
       request:"見積依頼へ",
       rfqDesc:"下記をご入力ください。推奨ツーリングとお見積をご連絡いたします。",
@@ -565,6 +629,10 @@
       leadPreviewLabel:"送信内容（プレビュー）",
       send:"送信する",
       rfqFoot:"送信後に図面添付のご案内を差し上げます。",
+      attach2Title:"図面添付で選定をスピードアップ",
+      attach2Text:"PDF/DXF があればこちらからアップロードしてください。見積依頼の送信前後どちらでも構いません。",
+      attachBtn2Text:"図面を添付（PDF/DXF）",
+      attach2Hint:"新しいタブで開きます。",
       asideTitle:"このチェックの目的",
       asideText:"用途の課題を整理し、推奨と見積依頼までを2分で完了させます。",
       asideBenefitsTitle:"Wing Bend の主なメリット（例）",
@@ -577,7 +645,7 @@
         "納期目安を含むお見積",
         "確認事項を最小化（事前要約済み）"
       ],
-      asideIdeaTitle:"販売強化の拡張（後から）",
+      asideIdeaTitle:"販売強化の拡張（任意）",
       asideIdeaText:"段取り時間・スクラップの簡易ROI計算を追加し、管理者向けに投資効果を提示できます。",
       privacyNote:"プライバシー：送信内容はお問い合わせ対応のために使用します。",
       goodTitle:"✅ Wing Bend は適合する可能性が高いです",
@@ -617,6 +685,10 @@
     $("back3").textContent = t.back;
 
     $("step1Hint").textContent = t.step1Hint;
+
+    $("industryLabel").textContent = t.industryLabel;
+    $("industryHint").textContent = t.industryHint;
+
     $("matLabel").textContent = t.matLabel;
     $("thkLabel").textContent = t.thkLabel;
     $("lenLabel").textContent = t.lenLabel;
@@ -626,6 +698,8 @@
     $("resSub").textContent = t.resSub;
     $("ctaMiniTitle").textContent = t.ctaMiniTitle;
     $("ctaMiniText").textContent = t.ctaMiniText;
+    $("attachBtnText").textContent = t.attachBtnText;
+    $("attachHint").textContent = t.attachHint;
     $("resFoot").textContent = t.resFoot;
 
     $("rfqDesc").textContent = t.rfqDesc;
@@ -637,6 +711,11 @@
     $("leadPreviewLabel").textContent = t.leadPreviewLabel;
     $("sendForm").textContent = t.send;
     $("rfqFoot").textContent = t.rfqFoot;
+
+    $("attach2Title").textContent = t.attach2Title;
+    $("attach2Text").textContent = t.attach2Text;
+    $("attachBtn2Text").textContent = t.attachBtn2Text;
+    $("attach2Hint").textContent = t.attach2Hint;
 
     $("asideTitle").textContent = t.asideTitle;
     $("asideText").textContent = t.asideText;
@@ -666,10 +745,7 @@
   // 3) Wizard nav
   // =======================
   const steps = ["step1","step2","step3","step4"];
-  let current = 0;
-
   function showStep(i){
-    current = i;
     steps.forEach((s,idx)=> $(s).style.display = (idx===i ? "block" : "none"));
     ["s1","s2","s3","s4"].forEach((sid,idx)=> $(sid).classList.toggle("active", idx===i));
     window.scrollTo({top:0, behavior:"smooth"});
@@ -677,18 +753,17 @@
 
   $("to2").onclick = ()=> showStep(1);
   $("back1").onclick = ()=> showStep(0);
-
   $("to3").onclick = ()=> { renderResult(); showStep(2); };
   $("back2").onclick = ()=> showStep(1);
-
   $("to4").onclick = ()=> { updateLeadPreview(); showStep(3); };
   $("back3").onclick = ()=> showStep(2);
 
   // =======================
-  // 4) Fit logic (sales-oriented, conservative)
+  // 4) Fit logic + industry personalization
   // =======================
   function getInputs(){
     return {
+      industry: $("industry").value,
       p_mark: $("p_mark").checked,
       p_short: $("p_short").checked,
       p_change: $("p_change").checked,
@@ -700,6 +775,29 @@
     };
   }
 
+  function industryExample(ind, lang){
+    const ja = {
+      automotive: "自動車部品：外観・品質要求が高い曲げ部品",
+      enclosure: "筐体・盤：外観面と段取り効率を両立したいケース",
+      appliance: "家電：外観面のキズ低減・安定生産",
+      medical: "医療/ラボ：外観品質・再現性が重要な部品",
+      aerospace: "航空：厳しい品質要求と工程安定",
+      jobshop: "板金ジョブショップ：多品種で段取り替え削減",
+      other: "用途に応じて最適構成をご提案"
+    };
+    const en = {
+      automotive: "Automotive parts with high appearance/quality requirements",
+      enclosure: "Enclosures/cabinets needing appearance + faster setup",
+      appliance: "Appliance panels aiming for reduced marking and stable output",
+      medical: "Medical/lab parts where appearance and repeatability matter",
+      aerospace: "Aerospace parts requiring strict quality and process stability",
+      jobshop: "Job shops handling many part types and frequent changeovers",
+      other: "We will tailor the recommendation to your application"
+    };
+    const map = (lang==="ja") ? ja : en;
+    return map[ind] || (lang==="ja" ? "用途に合わせてご提案" : "Tailored to your application");
+  }
+
   function scoreFit(inp){
     let score = 0;
     const reasons = [];
@@ -707,10 +805,19 @@
     const lang = $("lang").value;
     const t = T[lang] || T.en;
 
+    // Strong intent signals
     if(inp.p_mark){ score += 3; reasons.push(lang==="ja" ? "外観キズ（マーク）低減の課題に対して適用可能性" : "Potential to reduce surface marking / improve appearance"); badges.push(lang==="ja"?"外観":"Appearance"); }
     if(inp.p_short){ score += 3; reasons.push(lang==="ja" ? "短フランジ・逃げの少ない形状に対して適用可能性" : "Potential fit for short flange / limited clearance"); badges.push(lang==="ja"?"短フランジ":"Short flange"); }
     if(inp.p_change){ score += 2; reasons.push(lang==="ja" ? "段取り替え（工具交換）削減に寄与の可能性" : "May reduce changeover and tooling swaps"); badges.push(lang==="ja"?"段取り":"Changeover"); }
     if(inp.p_hole){ score += 2; reasons.push(lang==="ja" ? "穴・端部近傍での安定性改善に寄与の可能性" : "May improve stability near holes/edges"); badges.push(lang==="ja"?"穴/端部":"Holes/edges"); }
+
+    // Industry-tailored note (selling)
+    if(inp.industry){
+      reasons.push((lang==="ja" ? "業界/用途の例: " : "Industry/application example: ") + industryExample(inp.industry, lang));
+      badges.push(lang==="ja" ? "用途" : "Use case");
+    } else {
+      reasons.push(lang==="ja" ? "業界/用途を選ぶと、推奨例がより具体的になります" : "Selecting an industry helps us tailor examples and recommendations");
+    }
 
     // Uncertainty penalties
     if(inp.thk==="t5"){ score -= 2; reasons.push(lang==="ja" ? "板厚が不明／厚い場合は条件確認が必要" : "Thickness unknown/high — confirmation needed"); }
@@ -727,7 +834,7 @@
     if(score >= 4) status = "good";
     if(score <= 0) status = "ng";
 
-    // Add sales next-step reasons
+    // Sales next step
     if(status !== "ng"){
       reasons.push(lang==="ja" ? "図面（PDF/DXF）をご共有いただければ、推奨構成を確定できます" : "Share your drawing (PDF/DXF) to confirm the recommended setup");
     } else {
@@ -765,7 +872,7 @@
 
     const ul = $("resReasons");
     ul.innerHTML = "";
-    reasons.slice(0,6).forEach(r=>{
+    reasons.slice(0,7).forEach(r=>{
       const li = document.createElement("li");
       li.textContent = r;
       ul.appendChild(li);
@@ -797,6 +904,9 @@
     lines.push((isJA ? "ステータス: " : "Status: ") + (fit.status==="good" ? (isJA?"適合の可能性高":"Likely fit") : fit.status==="warn" ? (isJA?"要確認":"Needs confirmation") : (isJA?"用途確認推奨":"Application check recommended")));
     lines.push((isJA ? "スコア: " : "Score: ") + fit.score);
     lines.push("");
+    lines.push(isJA ? "【業界/用途】" : "[Industry/Application]");
+    lines.push(inp.industry || "n/a");
+    lines.push("");
     lines.push(isJA ? "【入力条件】" : "[Inputs]");
     lines.push("Material: " + (inp.material || "n/a"));
     lines.push("Thickness: " + (inp.thk || "n/a"));
@@ -813,7 +923,8 @@
     lines.push(isJA ? "【備考】" : "[Message]");
     lines.push($("msg").value || "");
     lines.push("");
-    lines.push(isJA ? "【次のアクション】図面（PDF/DXF）をご共有ください。" : "[Next action] Please share your drawing (PDF/DXF).");
+    lines.push(isJA ? "【図面アップロード】" : "[Drawing upload]");
+    lines.push(DRAWING_UPLOAD_URL);
 
     $("leadPreview").innerHTML =
       "<pre style='white-space:pre-wrap;margin:0;font-size:12px;line-height:1.5;'>" +
@@ -833,7 +944,7 @@
     });
     if(!res.ok){
       let detail = "";
-      try { detail = JSON.stringify(await res.json()); } catch(e){ /* ignore */ }
+      try { detail = JSON.stringify(await res.json()); } catch(e){}
       throw new Error("Form submission failed. " + detail);
     }
     return true;
@@ -850,22 +961,18 @@
     const lang = $("lang").value;
     const isJA = (lang==="ja");
     const email = $("email").value.trim();
-
-    // light validation
     if(!email || !email.includes("@")){
       showNotice(false, isJA ? "メールアドレスを入力してください。" : "Please enter a valid email.");
       return;
     }
 
     const { text, fit, inp } = updateLeadPreview();
-
-    // Prepare payload for Formspree.
-    // Formspree will email you the content. Add extra fields for filtering in inbox.
     const payload = {
       _subject: EMAIL_SUBJECT,
       language: lang,
       status: fit.status,
       score: fit.score,
+      industry: inp.industry || "",
       problems: summarizeProblems(inp),
       material: inp.material || "",
       thickness: inp.thk || "",
@@ -876,6 +983,7 @@
       email: $("email").value || "",
       country: $("country").value || "",
       message: $("msg").value || "",
+      drawing_upload_url: DRAWING_UPLOAD_URL,
       summary: text
     };
 
@@ -885,8 +993,6 @@
     try{
       await submitToFormspree(payload);
       showNotice(true, isJA ? "送信しました。担当よりご連絡いたします。" : "Submitted. Our team will contact you shortly.");
-      // Optional: clear form fields (keep preview)
-      // ["company","name","email","country","msg"].forEach(id=>$(id).value="");
     }catch(e){
       showNotice(false, (isJA ? "送信に失敗しました: " : "Submission failed: ") + e.message);
     }finally{
@@ -896,7 +1002,7 @@
   };
 
   // Live updates
-  ["material","thk","len","press","p_mark","p_short","p_change","p_hole"].forEach(id=>{
+  ["industry","material","thk","len","press","p_mark","p_short","p_change","p_hole"].forEach(id=>{
     $(id).addEventListener("change", ()=>{ renderResult(); updateLeadPreview(); });
     $(id).addEventListener("input", ()=>{ renderResult(); updateLeadPreview(); });
   });
@@ -907,6 +1013,7 @@
   $("lang").onchange = (e)=> setLang(e.target.value);
 
   // Init
+  setDrawingLinks();
   setLang("en");
   renderResult();
   updateLeadPreview();
